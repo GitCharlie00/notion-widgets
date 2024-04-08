@@ -1,63 +1,128 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orologi Mondo Moderni</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-            background-color: #282c34;
-            color: #ffffff;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>World Clock</title>
+  <style>
+    body{
+  background-color: #EEEEEE;
+}
+.container{
+    font-family:Cambria;
+    font-weight: bold;
+    width: 600px;
+    margin: 30px auto;
+    h1{
+        box-sizing: border-box;
+        font-size: 72px;
+        text-align: center;
+        padding: 20px;
+        width: 100%;
+        border-top: 5px solid #000;
+        border-bottom: 5px solid #000;
+    }
+    .timeZone{
+        width: 100%;
+        margin: 20px auto;
+        border: none;
+    }
+        tr{
+            border-bottom: 1px solid #000;
         }
-
-        .clock {
-            background: linear-gradient(145deg, #6e7ff3, #88a2f9);
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            border-radius: 10px;
-            padding: 30px;
-            margin: 20px;
-            font-size: 28px;
-            font-weight: 500;
+        td{
+            padding:10px 5%;
+            vertical-align: top;
+            width: 50%;
+            border: none;
+        }
+        h3{
+            font-size: 36px;
+            margin-bottom: 1px;
+        }
+        p{
+            font-size: 18px;
+            font-style: italic;
+        }
+        .time{
+            font-size: 72px;
             text-align: center;
-            width: 250px; /* Dimensione fissa */
-            height: 100px; /* Altezza fissa */
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-style: normal;
+            margin-top: 12%;
+            margin-bottom: 10%;
         }
-    </style>
+        .bg_dark{
+            color: #fff;
+            background: #000;
+        }
+    }
+
+  </style>
 </head>
 <body>
-    <div id="clockRome" class="clock">Loading Roma time...</div>
-    <div id="clockSendai" class="clock">Loading Sendai time...</div>
+  <div class="container">
+    <table class="timeZone">
+    </table>
+  </div>
+<script>
+    // 儲存各國名稱及時區
+var data=[
+  {
+    country:"ROME",
+    timeZone:"Europe/Rome",
+  },
+  {
+    country:"SENDAI",
+    timeZone:"Asia/Tokyo"
+  }
+]
 
-    <script>
-        function isDST(date) {
-            var year = date.getFullYear();
-            var jan = new Date(year, 0, 1).getTimezoneOffset();
-            var jul = new Date(year, 6, 1).getTimezoneOffset();
-            return Math.max(jan, jul) !== date.getTimezoneOffset(); 
-        }
+//儲存時間顯示格式
+option={day:"2-digit",month:"short",year:"numeric",hour12:false,hour:"numeric",minute:"2-digit"};
 
-        function updateClocks() {
-            let now = new Date();
-            let romeOffset = isDST(now) ? 2 : 1; // Ora legale: UTC+2, altrimenti UTC+1
-            let sendaiOffset = 9; // Sendai: UTC+9, Giappone non osserva l'ora legale
+//DOM
+var timeTable=document.querySelector('.timeZone');
 
-            let romeTime = new Date(now.getTime() + romeOffset * 60 * 60 * 1000);
-            document.getElementById('clockRome').textContent = 'Ora di Roma: ' + romeTime.toTimeString().slice(0, 8);
 
-            let sendaiTime = new Date(now.getTime() + sendaiOffset * 60 * 60 * 1000);
-            document.getElementById('clockSendai').textContent = 'Ora di Sendai: ' + sendaiTime.toTimeString().slice(0, 8);
-        }
+function clockMaker(){
+  //清除 timeTable內所有節點
+  timeTable.innerHTML='';
+  //new Date
+  let now=new Date();
+  //將 timeZone 加入 option中
+  for(let i=0;i<data.length;i++){
+    option.timeZone=data[i].timeZone;
+    let str=now.toLocaleString('en',option);
 
-        setInterval(updateClocks, 1000);
-    </script>
+    //切割時間字串
+    let splice=str.split(',')
+    let month=splice[0].split(' ')[0];
+    let day=splice[0].split(' ')[1];
+    let year=splice[1];
+
+    //將時間排成 DD/MM/YYYY
+    let DMY_combine=day+' '+month+','+year;
+    let time=splice[2];
+    let country=data[i].country;
+
+    //組字串
+    var tr=document.createElement('tr');
+    
+    tr.innerHTML=`<td>
+                  <h3>${country}</h3><p>${DMY_combine}</p>
+                  <div style="border-bottom: 1px solid black;"></div></td>
+                  <td><p class="time">${time}</p>
+                
+                  `
+    //新增 tr節點   
+    timeTable.appendChild(tr);
+  }
+  
+}
+//每半分鐘更新一次
+clockMaker();
+setInterval(clockMaker,30000);
+</script>
 </body>
 </html>
