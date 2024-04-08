@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orologi Mondo Moderni</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background-color: #282c34;
+            color: #ffffff;
+        }
+
+        .clock {
+            background: linear-gradient(145deg, #6e7ff3, #88a2f9);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px;
+            font-size: 28px;
+            font-weight: 500;
+            text-align: center;
+            width: 250px; /* Dimensione fissa */
+            height: 100px; /* Altezza fissa */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="clockRome" class="clock">Loading Roma time...</div>
+    <div id="clockSendai" class="clock">Loading Sendai time...</div>
+
+    <script>
+        function isDST(date) {
+            var year = date.getFullYear();
+            var jan = new Date(year, 0, 1).getTimezoneOffset();
+            var jul = new Date(year, 6, 1).getTimezoneOffset();
+            return Math.max(jan, jul) !== date.getTimezoneOffset(); 
+        }
+
+        function updateClocks() {
+            let now = new Date();
+            let romeOffset = isDST(now) ? 2 : 1; // Ora legale: UTC+2, altrimenti UTC+1
+            let sendaiOffset = 9; // Sendai: UTC+9, Giappone non osserva l'ora legale
+
+            let romeTime = new Date(now.getTime() + romeOffset * 60 * 60 * 1000);
+            document.getElementById('clockRome').textContent = 'Ora di Roma: ' + romeTime.toTimeString().slice(0, 8);
+
+            let sendaiTime = new Date(now.getTime() + sendaiOffset * 60 * 60 * 1000);
+            document.getElementById('clockSendai').textContent = 'Ora di Sendai: ' + sendaiTime.toTimeString().slice(0, 8);
+        }
+
+        setInterval(updateClocks, 1000);
+    </script>
+</body>
+</html>
