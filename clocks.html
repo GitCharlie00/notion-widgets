@@ -6,58 +6,50 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>World Clock</title>
   <style>
-    body{
-  background-color: #EEEEEE;
-}
-.container{
-    font-family:Cambria;
-    font-weight: bold;
-    width: 600px;
-    margin: 30px auto;
+    .container{
+        font-family:Cambria;
+        font-weight: bold;
+        width: 90%; /* Modifica la larghezza del contenitore */
+        max-width: 600px; /* Imposta una larghezza massima */
+        margin: 30px auto;
+    }
     h1{
         box-sizing: border-box;
-        font-size: 72px;
+        font-size: 4vw; /* Modifica la dimensione del font in base alla larghezza della viewport */
         text-align: center;
-        padding: 20px;
-        width: 100%;
-        border-top: 5px solid #000;
-        border-bottom: 5px solid #000;
+        padding: 2vw; /* Imposta il padding in base alla larghezza della viewport */
+        border-top: 0.3vw solid #000; /* Modifica la dimensione del bordo in base alla larghezza della viewport */
+        border-bottom: 0.3vw solid #000; /* Modifica la dimensione del bordo in base alla larghezza della viewport */
     }
     .timeZone{
         width: 100%;
-        margin: 20px auto;
+        margin: 5vw auto; /* Imposta il margine in base alla larghezza della viewport */
         border: none;
     }
-        tr{
-            border-bottom: 1px solid #000;
-        }
-        td{
-            padding:10px 5%;
-            vertical-align: top;
-            width: 50%;
-            border: none;
-        }
-        h3{
-            font-size: 36px;
-            margin-bottom: 1px;
-        }
-        p{
-            font-size: 18px;
-            font-style: italic;
-        }
-        .time{
-            font-size: 72px;
-            text-align: center;
-            font-style: normal;
-            margin-top: 12%;
-            margin-bottom: 10%;
-        }
-        .bg_dark{
-            color: #fff;
-            background: #000;
-        }
+    tr{
+        border-bottom: 0.1vw solid #000; /* Modifica la dimensione del bordo in base alla larghezza della viewport */
     }
-
+    td{
+        padding:2vw 2%; /* Imposta il padding in base alla larghezza della viewport */
+        vertical-align: top;
+        width: 45%; /* Modifica la larghezza delle colonne */
+        border: none;
+    }
+    h3{
+        font-size: 2vw; /* Modifica la dimensione del font in base alla larghezza della viewport */
+        margin-bottom: 0.1vw; /* Modifica il margine in base alla larghezza della viewport */
+    }
+    p{
+        font-size: 1vw; /* Modifica la dimensione del font in base alla larghezza della viewport */
+        font-style: italic;
+    }
+    .time{
+        font-size: 4vw; /* Modifica la dimensione del font in base alla larghezza della viewport */
+        text-align: center;
+        font-style: normal;
+        margin-top: 2vw; /* Modifica il margine in base alla larghezza della viewport */
+        margin-bottom: 2vw; /* Modifica il margine in base alla larghezza della viewport */
+    }
   </style>
 </head>
 <body>
@@ -111,7 +103,7 @@ function clockMaker(){
     
     tr.innerHTML=`<td>
                   <h3>${country}</h3><p>${DMY_combine}</p>
-                  <div style="border-bottom: 1px solid black;"></div></td>
+                  <div style="border-bottom: 0.1vw solid black;"></div></td>
                   <td><p class="time">${time}</p>
                 
                   `
